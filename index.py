@@ -1,4 +1,7 @@
 from __future__ import division
+
+from turtledemo.__main__ import font_sizes
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -49,8 +52,8 @@ for dataset in train_test_data:
     dataset['Default'] = dataset['Default'].map(default_mapping)
 
 def bar_chart(feature):
-    accepted = train[train['Target']==1][feature].value_counts()
-    declined = train[train['Target']==0][feature].value_counts()
+    accepted = train_test_data[0][train_test_data[0]['Target']==1][feature].value_counts()
+    declined = train_test_data[0][train_test_data[0]['Target']==0][feature].value_counts()
     df = pd.DataFrame([accepted,declined])
     df.index = ['Accepted','Declined']
     df.plot(kind='bar',stacked='True', figsize = (10,10))
@@ -69,26 +72,27 @@ def data_split():
 print(train.Job.value_counts())
 bar_chart('Loan')
 def sns_plot(feature, max = 0, min = 0):
-    facet = sns.FacetGrid(train, hue="Target", aspect = 4)
+    facet = sns.FacetGrid(train_test_data[0], hue="Target", aspect = 4)
     facet.map(sns.kdeplot, feature, shade = True)
-    facet.set(xlim=(0,train[feature].max()))
+    facet.set(xlim=(0,train_test_data[0][feature].max()))
     facet.add_legend()
     if max == 0:
-        max = train[feature].max()
+        max = train_test_data[0][feature].max()
     if min == 0:
-        min = train[feature].min()
+        min = train_test_data[0][feature].min()
     plt.xlim(min,max)
     plt.show()
 
 # Job mapping
-job_mapping = {"unknown": 0, "unemployed": 1, "self-employed": 2, "student": 3, "blue-collar": 4, "housemaid": 5, "entrepreneur": 6, "management": 7, "services": 8, "technician": 9, "admin.": 10, "retired": 11}
-for dataset in train_test_data:
-    dataset['Job'] = dataset['Job'].map(job_mapping)
-print(train.head(20))
+# job_mapping = ["unknown", "unemployed", "self-employed", "student", "blue-collar", "housemaid", "entrepreneur",
+#                "management", "services", "technician", "admin", "retired"]
 
+for i in range(2):
+    train_test_data[i] = pd.concat([train_test_data[i],pd.get_dummies(train_test_data[i]['Job'])],axis = 1)
+print(train_test_data[0].columns)
 
 print("Min age: ",train.Age.min(),"\nMax age: ",train.Age.max())
-sns_plot('Age')
+
 
 # Contact mapping
 print(train.Contact.value_counts())
@@ -130,19 +134,41 @@ for dataset in train_test_data:
      dataset.loc[ (dataset['Age']>=28) & (dataset['Age']<40), 'Age'] = 1,
      dataset.loc[ (dataset['Age']>=40) & (dataset['Age']<58), 'Age']= 2,
      dataset.loc[ (dataset['Age']>=58),'Age'] = 3
-bar_chart('Age')
 
+print(train_test_data[0].iloc[5:])
 sns_plot('Marital')
-sns_plot('Age',4,-1)
+print(train_test_data[0].Age.value_counts())
 
+group_one = pd.DataFrame()
+group_one = train_test_data[0].loc[train_test_data[0]['Target']==1, 'Age'].value_counts().rename_axis('Age '
+                                                                                                      'group').reset_index(name='Counts')
+group_one['Target'] = 1
+group_one['Counts'] = group_one['Counts']/group_one['Counts'].sum()
+group_zero = pd.DataFrame()
+group_zero = train_test_data[0].loc[train_test_data[0]['Target']==0, 'Age'].value_counts().rename_axis('Age '
+                                                                                            'group').reset_index(name='Counts')
+group_zero['Target'] = 0
+group_zero['Counts'] = group_zero['Counts']/group_zero['Counts'].sum()
+
+group = pd.DataFrame()
+group = pd.concat([group_one, group_zero])
+print(group)
+
+g = sns.catplot(x='Age group'  ,y = 'Counts' ,col='Target', palette="ch:.25", kind = 'bar', data=group)
+g.set_ylabels('Counts percentage [%]', fontsize = 15)
+g.set_xlabels('Age groups', fontsize = 15)
+g.set_yticklabels(fontsize = 15)
+g.set_xticklabels(fontsize = 15)
+# g.set_titles("Target = {col_name}", fontsize = 20)
+plt.show()
 #seasoning
-sns_plot('Month')
+# sns_plot('Month')
 
 #scatter_matrix(train.iloc[:,0:5])
 # scatter_matrix(train[train.columns[0:5]])
 # plt.show()
-for column in train:
-    print(train[column].describe())
+# for column in train:
+#     print(train[column].describe())
 
 
 def Normalize(feature):
@@ -155,28 +181,28 @@ def Normalize(feature):
 
     print("Normalized {}: ".format(feature), train[_feature].tail(10))
 
-# Campaign normalization
-Normalize('Campaign')
-# Pdays normalization
-Normalize('Pdays')
 
-
-print(train.shape)
 #building target array
-train = train.drop('Duration',axis=1)
-test = test.drop('Duration',axis=1)
+train_test_data[0] = train_test_data[0].drop('Duration',axis=1)
+train_test_data[1] = train_test_data[1].drop('Duration',axis=1)
 target_train = train['Target']
 target_test = test['Target']
-train = train.drop('Target',axis=1)
-test = test.drop('Target',axis=1)
+train_test_data[0] = train_test_data[0].drop('Target',axis=1)
+train_test_data[1] = train_test_data[1].drop('Target',axis=1)
 
-print(train.shape)
+train_test_data[0] = train_test_data[0].drop('Job',axis = 1)
+train_test_data[1] = train_test_data[1].drop('Job',axis = 1)
+
+print(train_test_data[0].columns)
+print(train_test_data[0].head(5))
 
 knn = KNeighborsClassifier(algorithm='auto',metric='minkowski',n_neighbors=3,weights='uniform')
-knn.fit(train,target_train)
-print(knn.predict(test)) # Classifing
-print(knn.predict_proba(test)) # probability
+knn.fit(train_test_data[0],target_train)
+print(knn.predict(train_test_data[1])) # Classifing
+print(knn.predict_proba(train_test_data[1])) # probability
 
-print("KNN score: ",knn.score(test,target_test))
+print("KNN score: ",knn.score(train_test_data[1],target_test))
 train.to_csv('train_test_data.csv')
 test.to_csv('test.csv')
+print("Train shape: ",train_test_data[0].shape)
+print("Test shape: ", train_test_data[1].shape)
