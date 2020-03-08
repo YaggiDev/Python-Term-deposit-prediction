@@ -9,6 +9,9 @@ import random
 import seaborn as sns
 from sklearn import preprocessing
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import cross_val_score
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import LinearRegression
 from pandas.plotting import scatter_matrix
 
 # -*- coding: utf-8 -*-
@@ -130,10 +133,10 @@ print(train.isnull().sum(axis = 0))
 
 #Groupin Age
 for dataset in train_test_data:
-     dataset.loc[ dataset['Age']<28, 'Age'] = 0,
-     dataset.loc[ (dataset['Age']>=28) & (dataset['Age']<40), 'Age'] = 1,
-     dataset.loc[ (dataset['Age']>=40) & (dataset['Age']<58), 'Age']= 2,
-     dataset.loc[ (dataset['Age']>=58),'Age'] = 3
+     dataset.loc[ dataset['Age']<26, 'Age'] = 0,
+     dataset.loc[ (dataset['Age']>=26) & (dataset['Age']<40), 'Age'] = 1,
+     dataset.loc[ (dataset['Age']>=40) & (dataset['Age']<60), 'Age']= 2,
+     dataset.loc[ (dataset['Age']>=60),'Age'] = 3
 
 print(train_test_data[0].iloc[5:])
 sns_plot('Marital')
@@ -161,6 +164,9 @@ g.set_yticklabels(fontsize = 15)
 g.set_xticklabels(fontsize = 15)
 # g.set_titles("Target = {col_name}", fontsize = 20)
 plt.show()
+bar_chart('Age')
+
+
 #seasoning
 # sns_plot('Month')
 
@@ -181,10 +187,25 @@ def Normalize(feature):
 
     print("Normalized {}: ".format(feature), train[_feature].tail(10))
 
+temp = pd.DataFrame()
+temp = train_test_data[0].corr(method='pearson')
+# temp.to_csv('corr.csv')
+
+# Pearson Correlation
+figure = plt.figure(figsize=(25,17))
+cor = train_test_data[0].corr()
+g = sns.heatmap(cor, annot=True, cmap=plt.cm.Reds, fmt='.2g',linewidths=1, cbar_kws={}, square = True)
+g.set_title('Correlation diagram', fontsize = 30)
+g.set_ylim(28,0)
+plt.tight_layout()
+# g.figure.axes[-1].yaxis.label.set_size(20)
+plt.show()
+
 
 #building target array
 train_test_data[0] = train_test_data[0].drop('Duration',axis=1)
 train_test_data[1] = train_test_data[1].drop('Duration',axis=1)
+
 target_train = train['Target']
 target_test = test['Target']
 train_test_data[0] = train_test_data[0].drop('Target',axis=1)
@@ -196,13 +217,41 @@ train_test_data[1] = train_test_data[1].drop('Job',axis = 1)
 print(train_test_data[0].columns)
 print(train_test_data[0].head(5))
 
-knn = KNeighborsClassifier(algorithm='auto',metric='minkowski',n_neighbors=3,weights='uniform')
+# Correlation
+# max = 0
+# for feature in train_test_data[0]:
+#     temp = np.corrcoef(train_test_data[0][feature],target_train)
+#     temp.plot.scatter()
+#     plt.show()
+#     if abs(temp[0][1]) > max:
+#         max = abs(temp[0][1])
+#     elif abs(temp[1][0])> max:
+#         max = abs(temp[1][0])
+# print(max)
+
+
+
+
+knn = KNeighborsClassifier(algorithm='auto',metric='euclidean', metric_params = None,
+                           n_neighbors=3,
+                           weights='distance')
 knn.fit(train_test_data[0],target_train)
 print(knn.predict(train_test_data[1])) # Classifing
 print(knn.predict_proba(train_test_data[1])) # probability
 
 print("KNN score: ",knn.score(train_test_data[1],target_test))
-train.to_csv('train_test_data.csv')
+train_test_data[0].to_csv('train_test_data.csv')
 test.to_csv('test.csv')
+
+clf = DecisionTreeClassifier(criterion='gini')
+clf.fit(train_test_data[0], target_train)
+print(clf.predict_proba(train_test_data[1]))
+print("Decision tree score: ", clf.score(train_test_data[1],target_test))
+
 print("Train shape: ",train_test_data[0].shape)
 print("Test shape: ", train_test_data[1].shape)
+
+reg = LinearRegression()
+reg.fit(train_test_data[0],target_train)
+print(reg.predict(train_test_data[1]))
+print("Linear regression score: ", reg.score(train_test_data[1],target_test))
