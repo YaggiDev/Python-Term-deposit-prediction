@@ -61,6 +61,7 @@ def bar_chart(feature):
     df.index = ['Accepted','Declined']
     df.plot(kind='bar',stacked='True', figsize = (10,10))
     plt.title(feature)
+    plt.savefig('Diagrams/'+feature+"_Diagram.png")
     plt.show()
 
 def data_split():
@@ -84,6 +85,7 @@ def sns_plot(feature, max = 0, min = 0):
     if min == 0:
         min = train_test_data[0][feature].min()
     plt.xlim(min,max)
+    plt.savefig('Diagrams/'+feature+"_Diagram.png")
     plt.show()
 
 # Job mapping
@@ -163,6 +165,7 @@ g.set_xlabels('Age groups', fontsize = 15)
 g.set_yticklabels(fontsize = 15)
 g.set_xticklabels(fontsize = 15)
 # g.set_titles("Target = {col_name}", fontsize = 20)
+plt.savefig('Diagrams/AgeByGroup_Diagram.png')
 plt.show()
 bar_chart('Age')
 
@@ -199,6 +202,7 @@ g.set_title('Correlation diagram', fontsize = 30)
 g.set_ylim(28,0)
 plt.tight_layout()
 # g.figure.axes[-1].yaxis.label.set_size(20)
+plt.savefig('Diagrams/CorrelationHeatMap_Diagram.png')
 plt.show()
 
 
