@@ -139,7 +139,7 @@ ind = np.arange(12)
 width = 0.35
 ax.bar(ind,train_test_data[0].loc[train_test_data[0]['Target']==1,'Month'].value_counts(),width,label='Target = 1')
 ax.bar(ind+width, train_test_data[0].loc[train_test_data[0]['Target']==0,'Month'].value_counts(),width, label='Target = 0')
-ax.set_title('Groupped value counts in months')
+ax.set_title('Grouped value counts in months')
 ax.set_xticks(ind+width/2)
 ax.set_xticklabels(month_mapping)
 ax.legend()
