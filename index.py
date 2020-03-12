@@ -13,6 +13,12 @@ from sklearn.model_selection import cross_val_score
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LinearRegression
 from pandas.plotting import scatter_matrix
+from sklearn import metrics
+from sklearn.externals.six import StringIO
+from IPython.display import Image
+from sklearn import tree
+import pydotplus
+import matplotlib as mpl
 
 # -*- coding: utf-8 -*-
 # Dataset source: https://archive.ics.uci.edu/ml/datasets/bank+marketing
@@ -27,7 +33,7 @@ print(train.columns)
 
 print(train.dtypes)
 
-print(train.isnull().sum(axis = 0))
+print("Null values: ", train.isnull().sum(axis = 0))
 print(train.dtypes)
 print(train['Target'].value_counts())
 
@@ -127,6 +133,19 @@ print(train.Month.value_counts())
 month_mapping = {"jan": 0, "feb": 1,"mar": 2,"apr": 3,"may": 4,"jun": 5,"jul": 6,"aug": 7,"sep": 8,"oct": 9,"nov": 10,"dec": 11}
 for dataset in train_test_data:
     dataset.Month = dataset.Month.map(month_mapping)
+
+fig, ax = plt.subplots()
+ind = np.arange(12)
+width = 0.35
+ax.bar(ind,train_test_data[0].loc[train_test_data[0]['Target']==1,'Month'].value_counts(),width,label='Target = 1')
+ax.bar(ind+width, train_test_data[0].loc[train_test_data[0]['Target']==0,'Month'].value_counts(),width, label='Target = 0')
+ax.set_title('Groupped value counts in months')
+ax.set_xticks(ind+width/2)
+ax.set_xticklabels(month_mapping)
+ax.legend()
+ax.autoscale_view()
+plt.savefig('Diagrams/MonthsCounts.png')
+plt.show()
 
 print(train.head(10))
 print(train.dtypes)
@@ -234,20 +253,22 @@ print(train_test_data[0].head(5))
 # print(max)
 
 
+cov = train_test_data[0].cov()
 
-
-knn = KNeighborsClassifier(algorithm='auto',metric='euclidean', metric_params = None,
+knn = KNeighborsClassifier(algorithm='auto',metric='mahalanobis', metric_params = {"V": cov},
                            n_neighbors=3,
                            weights='distance')
 knn.fit(train_test_data[0],target_train)
-print(knn.predict(train_test_data[1])) # Classifing
-print(knn.predict_proba(train_test_data[1])) # probability
+pred_knn = knn.predict(train_test_data[1])
+print(pred_knn) # Classifing
+pred_prob_knn = knn.predict_proba(train_test_data[1])
+print(pred_prob_knn) # probability
 
 print("KNN score: ",knn.score(train_test_data[1],target_test))
 train_test_data[0].to_csv('train_test_data.csv')
 test.to_csv('test.csv')
 
-clf = DecisionTreeClassifier(criterion='gini')
+clf = DecisionTreeClassifier(criterion='gini', max_depth = 10, min_samples_leaf = 0.01)
 clf.fit(train_test_data[0], target_train)
 print(clf.predict_proba(train_test_data[1]))
 print("Decision tree score: ", clf.score(train_test_data[1],target_test))
@@ -259,3 +280,15 @@ reg = LinearRegression()
 reg.fit(train_test_data[0],target_train)
 print(reg.predict(train_test_data[1]))
 print("Linear regression score: ", reg.score(train_test_data[1],target_test))
+
+# fpr, tpr, threshold = metrics.roc_auc_score(target_test,pred_prob_knn[1])
+# print(metrics.auc(fpr,tpr))
+
+# dot_data = StringIO()
+# export_graphviz(clf, out_file = dot_data, filled = True, rounded = True, special_characters= True)
+# graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
+# Image(graph.create_png())
+tree.plot_tree(clf,fontsize = 10, rounded = True)
+plt.figure(figsize=(30,30))
+plt.tight_layout()
+plt.show()
