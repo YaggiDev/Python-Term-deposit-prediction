@@ -19,6 +19,7 @@ from IPython.display import Image
 from sklearn import tree
 import pydotplus
 import matplotlib as mpl
+from mlxtend.plotting import plot_decision_regions
 
 # -*- coding: utf-8 -*-
 # Dataset source: https://archive.ics.uci.edu/ml/datasets/bank+marketing
@@ -206,7 +207,6 @@ def Normalize(feature):
         col_scaled = min_max_scaler.fit_transform(col)
         _feature = feature +"_norm"
         dataset[_feature] = pd.DataFrame(col_scaled)
-
     print("Normalized {}: ".format(feature), train[_feature].tail(10))
 
 temp = pd.DataFrame()
@@ -265,8 +265,19 @@ pred_prob_knn = knn.predict_proba(train_test_data[1])
 print(pred_prob_knn) # probability
 
 print("KNN score: ",knn.score(train_test_data[1],target_test))
+# Importing for SAS
 train_test_data[0].to_csv('train_test_data.csv')
 test.to_csv('test.csv')
+
+# # KNN plotting
+# X = train_test_data[0].to_numpy()
+# Y = target_train.to_numpy()
+# print(X)
+# plot_decision_regions(X, Y, clf = knn, legend = 2)
+# plt.xlabel('X')
+# plt.ylabel('Y')
+# plt.title('KNN with K = 3')
+# plt.show()
 
 clf = DecisionTreeClassifier(criterion='gini', max_depth = 10, min_samples_leaf = 0.01)
 clf.fit(train_test_data[0], target_train)
@@ -280,6 +291,7 @@ reg = LinearRegression()
 reg.fit(train_test_data[0],target_train)
 print(reg.predict(train_test_data[1]))
 print("Linear regression score: ", reg.score(train_test_data[1],target_test))
+print("Linear regression coefficients: ", reg.coef_)
 
 # fpr, tpr, threshold = metrics.roc_auc_score(target_test,pred_prob_knn[1])
 # print(metrics.auc(fpr,tpr))
@@ -289,6 +301,6 @@ print("Linear regression score: ", reg.score(train_test_data[1],target_test))
 # graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
 # Image(graph.create_png())
 tree.plot_tree(clf,fontsize = 10, rounded = True)
-plt.figure(figsize=(30,30))
+plt.figure(dpi = 600)
 plt.tight_layout()
 plt.show()
