@@ -1,7 +1,4 @@
 from __future__ import division
-
-from turtledemo.__main__ import font_sizes
-
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -14,7 +11,6 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LinearRegression
 from pandas.plotting import scatter_matrix
 from sklearn import metrics
-from sklearn.externals.six import StringIO
 from IPython.display import Image
 from sklearn import tree
 import pydotplus
@@ -61,15 +57,18 @@ default_mapping = {"no": 0, "yes": 1}
 for dataset in train_test_data:
     dataset['Default'] = dataset['Default'].map(default_mapping)
 
+
 def bar_chart(feature):
     accepted = train_test_data[0][train_test_data[0]['Target']==1][feature].value_counts()
     declined = train_test_data[0][train_test_data[0]['Target']==0][feature].value_counts()
     df = pd.DataFrame([accepted,declined])
     df.index = ['Accepted','Declined']
+
     df.plot(kind='bar',stacked='True', figsize = (10,10))
     plt.title(feature)
     plt.savefig('Diagrams/'+feature+"_Diagram.png")
     plt.show()
+
 
 def data_split():
     train_data = pd.DataFrame()
@@ -80,8 +79,11 @@ def data_split():
     sample = random.sample(all_indexes,train_indexes)
     print(len(sample))
 
+
 print(train.Job.value_counts())
 bar_chart('Loan')
+
+
 def sns_plot(feature, max = 0, min = 0):
     facet = sns.FacetGrid(train_test_data[0], hue="Target", aspect = 4)
     facet.map(sns.kdeplot, feature, shade = True)
@@ -94,6 +96,7 @@ def sns_plot(feature, max = 0, min = 0):
     plt.xlim(min,max)
     plt.savefig('Diagrams/'+feature+"_Diagram.png")
     plt.show()
+
 
 # Job mapping
 # job_mapping = ["unknown", "unemployed", "self-employed", "student", "blue-collar", "housemaid", "entrepreneur",
@@ -208,6 +211,7 @@ def Normalize(feature):
         _feature = feature +"_norm"
         dataset[_feature] = pd.DataFrame(col_scaled)
     print("Normalized {}: ".format(feature), train[_feature].tail(10))
+
 
 temp = pd.DataFrame()
 temp = train_test_data[0].corr(method='pearson')
