@@ -8,3 +8,5 @@ The main objective of the project is to learn data analysis in python such as pa
 - seaborn
 - numpy
 - Pycharm
+
+# Problem describe
