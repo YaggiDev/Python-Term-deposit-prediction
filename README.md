@@ -13,7 +13,7 @@ The main objective of the project is to learn data analysis in python such as pa
 The data used in project is related with direct marketing campaign of a Portuguese banking institution. The marketing campaign were based on phone calls. Our main task is to make a prediction model to answer the question if the client has subscribed ('yes') or not ('no') a term deposit.
 
 # Data information
-
+Data is splitted into two .csv files (train data and test data). Training dataset contains 45211 rows and 4521 for test data. Dataset does not contain any missing values..
 ## Bank client data:
 1. age
 2. job: type of job (categorical: ‘admin’, ‘blue-collar’,  ‘enterpreneur’, ‘housemaid’, management’, ‘retired’, ‘self-employed’, ‘services’, ‘student’, ‘technician’, ‘unemployed’, ‘unknown’)
@@ -32,5 +32,6 @@ The data used in project is related with direct marketing campaign of a Portugue
 15. previous: number of contacts performed before this campaign and for this client
 16. poutcome: outcome of the previous marketing campaign (categorical: ‘failure’, ‘nonexistent’, ‘success’)
 
-Output variable (desired target):
+Output variable (desired target):  
 17. y - has the client subscribed a term deposit? (binary: "yes","no")
+
