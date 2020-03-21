@@ -8,7 +8,7 @@ from sklearn import preprocessing
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import cross_val_score
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression
 from pandas.plotting import scatter_matrix
 from sklearn import metrics
 from IPython.display import Image
@@ -16,6 +16,8 @@ from sklearn import tree
 import pydotplus
 import matplotlib as mpl
 from mlxtend.plotting import plot_decision_regions
+from sklearn.neural_network import MLPClassifier
+import pickle
 
 # -*- coding: utf-8 -*-
 # Dataset source: https://archive.ics.uci.edu/ml/datasets/bank+marketing
@@ -244,17 +246,15 @@ train_test_data[1] = train_test_data[1].drop('Job',axis = 1)
 print(train_test_data[0].columns)
 print(train_test_data[0].head(5))
 
-# Correlation
-# max = 0
-# for feature in train_test_data[0]:
-#     temp = np.corrcoef(train_test_data[0][feature],target_train)
-#     temp.plot.scatter()
-#     plt.show()
-#     if abs(temp[0][1]) > max:
-#         max = abs(temp[0][1])
-#     elif abs(temp[1][0])> max:
-#         max = abs(temp[1][0])
-# print(max)
+# Save the model
+def pickle_in(model, filename, path = "Models/"):
+    filename = path + filename + ".pickle"
+    pickle.dump(model,open(filename,"wb"))
+
+# Load the model
+def pickle_out(filename, path = "Models/"):
+    filename = path + filename + ".pickle"
+    return pickle.load(open(filename,"rb"))
 
 
 cov = train_test_data[0].cov()
@@ -263,6 +263,7 @@ knn = KNeighborsClassifier(algorithm='auto',metric='mahalanobis', metric_params 
                            n_neighbors=3,
                            weights='distance')
 knn.fit(train_test_data[0],target_train)
+pickle_in(knn,"KNNModel")
 pred_knn = knn.predict(train_test_data[1])
 print(pred_knn) # Classifing
 pred_prob_knn = knn.predict_proba(train_test_data[1])
@@ -285,17 +286,20 @@ test.to_csv('test.csv')
 
 clf = DecisionTreeClassifier(criterion='gini', max_depth = 10, min_samples_leaf = 0.01)
 clf.fit(train_test_data[0], target_train)
+pickle_in(clf,"DecisionTree")
 print(clf.predict_proba(train_test_data[1]))
 print("Decision tree score: ", clf.score(train_test_data[1],target_test))
 
 print("Train shape: ",train_test_data[0].shape)
 print("Test shape: ", train_test_data[1].shape)
 
-reg = LinearRegression()
+reg = LogisticRegression(random_state = 0)
 reg.fit(train_test_data[0],target_train)
+pickle_in(reg, "LogisticRegression")
 print(reg.predict(train_test_data[1]))
-print("Linear regression score: ", reg.score(train_test_data[1],target_test))
-print("Linear regression coefficients: ", reg.coef_)
+print("Logistic regression score: ", reg.score(train_test_data[1],target_test))
+print("Logistic regression coefficients: ", reg.coef_)
+
 
 # fpr, tpr, threshold = metrics.roc_auc_score(target_test,pred_prob_knn[1])
 # print(metrics.auc(fpr,tpr))
@@ -308,3 +312,10 @@ tree.plot_tree(clf,fontsize = 10, rounded = True)
 plt.figure(dpi = 600)
 plt.tight_layout()
 plt.show()
+
+# MLP Classifier
+mlp = MLPClassifier(solver='adam',hidden_layer_sizes= (13,2))
+mlp.fit(train_test_data[0],target_train)
+pickle_in(mlp, "MLPClassifier")
+print("Neural network MLP: ",mlp.score(train_test_data[1],target_test))
+
