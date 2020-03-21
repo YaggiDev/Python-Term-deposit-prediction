@@ -31,3 +31,6 @@ The data used in project is related with direct marketing campaign of a Portugue
 14. pdays: number of days that passed by after the client was last contacted from previous campaign (numeric: 999 means client was not previously contacted)
 15. previous: number of contacts performed before this campaign and for this client
 16. poutcome: outcome of the previous marketing campaign (categorical: ‘failure’, ‘nonexistent’, ‘success’)
+
+Output variable (desired target):
+17. y - has the client subscribed a term deposit? (binary: "yes","no")
