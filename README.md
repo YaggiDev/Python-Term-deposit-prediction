@@ -34,3 +34,4 @@ Data is splitted into two .csv files (train data and test data). Training datase
 
 Output variable (desired target):
 17. y - has the client subscribed a term deposit? (binary: "yes","no")
+
