@@ -70,6 +70,8 @@ default_mapping = {"no": 0, "yes": 1}
 for dataset in train_test_data:
     dataset['Default'] = dataset['Default'].map(default_mapping)
 
+# Balance
+train_test_data[0].describe()
 
 def bar_chart(feature):
     accepted = train_test_data[0][train_test_data[0]['Target']==1][feature].value_counts()
@@ -144,9 +146,11 @@ print(train_test_data[0].Poutcome.value_counts())
 poutcome_mapping = {"failure": 0,"nonexistent": 1,"success": 2, "unknown": 3, "other": 4}
 for dataset in train_test_data:
     dataset.Poutcome = dataset.Poutcome.map(poutcome_mapping)
-
 # Month mapping
+# TODO change categorical to binary variables
 print(train_test_data[0].Month.value_counts())
+for i in range(2):
+    train_test_data[i] = pd.concat([train_test_data[i],pd.get_dummies(train_test_data[i]['Month'])],axis = 1)
 month_mapping = {"jan": 0, "feb": 1,"mar": 2,"apr": 3,"may": 4,"jun": 5,"jul": 6,"aug": 7,"sep": 8,"oct": 9,"nov": 10,"dec": 11}
 for dataset in train_test_data:
     dataset.Month = dataset.Month.map(month_mapping)
@@ -242,6 +246,7 @@ plt.savefig('Diagrams/CorrelationHeatMap_Diagram.png')
 plt.show()
 
 
+
 #building target array
 train_test_data[0] = train_test_data[0].drop('Duration',axis=1)
 train_test_data[1] = train_test_data[1].drop('Duration',axis=1)
@@ -253,6 +258,8 @@ train_test_data[1] = train_test_data[1].drop('Target',axis=1)
 
 train_test_data[0] = train_test_data[0].drop('Job',axis = 1)
 train_test_data[1] = train_test_data[1].drop('Job',axis = 1)
+train_test_data[0] = train_test_data[0].drop('Month',axis = 1)
+train_test_data[1] = train_test_data[1].drop('Month',axis = 1)
 
 print(train_test_data[0].columns)
 print(train_test_data[0].head(5))
@@ -267,6 +274,17 @@ def pickle_out(filename, path = "Models/"):
     filename = path + filename + ".pickle"
     return pickle.load(open(filename,"rb"))
 
+# Check pickle if better
+def check_model(model, filename, x_test, y_test, path = "Models/"):
+    new_model_score = model.score(x_test,y_test)
+    saved_model = pickle_out(filename, path)
+    saved_model_score = saved_model.score(x_test, y_test)
+    if new_model_score > saved_model_score:
+        pickle_in(model, filename)
+        return model
+    else:
+        return saved_model
+
 
 cov = train_test_data[0].cov()
 
@@ -274,7 +292,8 @@ knn = KNeighborsClassifier(algorithm='auto',metric='mahalanobis', metric_params 
                            n_neighbors=3,
                            weights='distance')
 knn.fit(train_test_data[0],target_train)
-pickle_in(knn,"KNNModel")
+# pickle_in(knn,"KNNModel")
+knn = check_model(knn,"KNNModel",train_test_data[1],target_test)
 pred_knn = knn.predict(train_test_data[1])
 print(pred_knn) # Classifing
 pred_prob_knn = knn.predict_proba(train_test_data[1])
@@ -297,7 +316,8 @@ train_test_data[1].to_csv('test.csv')
 
 clf = DecisionTreeClassifier(criterion='gini', max_depth = 10, min_samples_leaf = 0.01)
 clf.fit(train_test_data[0], target_train)
-pickle_in(clf,"DecisionTree")
+# pickle_in(clf,"DecisionTree")
+clf = check_model(clf,"DecisionTree",train_test_data[1],target_test)
 print(clf.predict_proba(train_test_data[1]))
 print("Decision tree score: ", clf.score(train_test_data[1],target_test))
 
@@ -306,7 +326,8 @@ print("Test shape: ", train_test_data[1].shape)
 
 reg = LogisticRegression(random_state = 0)
 reg.fit(train_test_data[0],target_train)
-pickle_in(reg, "LogisticRegression")
+# pickle_in(reg, "LogisticRegression")
+reg = check_model(reg,"LogisticRegression",train_test_data[1],target_test)
 print(reg.predict(train_test_data[1]))
 print("Logistic regression score: ", reg.score(train_test_data[1],target_test))
 print("Logistic regression coefficients: ", reg.coef_)
@@ -327,5 +348,6 @@ plt.show()
 # MLP Classifier
 mlp = MLPClassifier(solver='adam',hidden_layer_sizes= (13,2))
 mlp.fit(train_test_data[0],target_train)
-pickle_in(mlp, "MLPClassifier")
+# pickle_in(mlp, "MLPClassifier")
+mlp = check_model(mlp,"MLPClassifier",train_test_data[1],target_test)
 print("Neural network MLP: ",mlp.score(train_test_data[1],target_test))

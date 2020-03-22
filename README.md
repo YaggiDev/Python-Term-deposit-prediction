@@ -37,3 +37,4 @@ Output variable (desired target):
 17. y - has the client subscribed a term deposit? (binary: "yes","no")
 
 There are no missing values for each attribute.
+
