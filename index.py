@@ -345,6 +345,7 @@ plt.figure(dpi = 600)
 plt.tight_layout()
 plt.show()
 
+
 # MLP Classifier
 mlp = MLPClassifier(solver='adam',hidden_layer_sizes= (13,2))
 mlp.fit(train_test_data[0],target_train)
