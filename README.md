@@ -14,7 +14,7 @@ The main objective of the project is to learn data analysis in python such as pa
 The data used in project is related with direct marketing campaign of a Portuguese banking institution. The marketing campaign were based on phone calls. Our main task is to make a prediction model to answer the question if the client has subscribed ('yes') or not ('no') a term deposit.
 
 # Data information
-Data is located in bank-full.csv and based on this file, splitted into train and test data in proportion 0,9 to 0,1. As results we have 40689 rows of training data and 4521 rows of testing data. 
+Data is located in bank-full.csv and based on this file, splitted into train and test data in proportion 0,9 to 0,1. As a result we have 40689 rows of training data and 4521 rows of testing data. 
 ## Bank client data:
 1. age
 2. job: type of job (categorical: ‘admin’, ‘blue-collar’,  ‘enterpreneur’, ‘housemaid’, management’, ‘retired’, ‘self-employed’, ‘services’, ‘student’, ‘technician’, ‘unemployed’, ‘unknown’)
