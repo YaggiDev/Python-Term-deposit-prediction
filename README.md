@@ -8,6 +8,7 @@ The main objective of the project is to learn data analysis in python such as pa
 - seaborn
 - numpy
 - Pycharm
+- Pickle
 
 # Problem describe
 The data used in project is related with direct marketing campaign of a Portuguese banking institution. The marketing campaign were based on phone calls. Our main task is to make a prediction model to answer the question if the client has subscribed ('yes') or not ('no') a term deposit.
