@@ -283,7 +283,7 @@ print(pred_prob_knn) # probability
 print("KNN score: ",knn.score(train_test_data[1],target_test))
 # Importing for SAS
 train_test_data[0].to_csv('train_test_data.csv')
-test.to_csv('test.csv')
+train_test_data[1].to_csv('test.csv')
 
 # # KNN plotting
 # X = train_test_data[0].to_numpy()
