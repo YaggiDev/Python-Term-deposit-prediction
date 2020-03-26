@@ -54,7 +54,7 @@ for dataset in train_test_data:
 
 # Mapping Marital
 print(train_test_data[0]['Marital'].value_counts())
-marital_mapping = {"single": 0, "married": 1, "divorced": 2}
+marital_mapping = {"single": 1, "married": 2, "divorced": 3, "uknown": 0}
 for dataset in train_test_data:
     dataset['Marital'] = dataset['Marital'].map(marital_mapping)
 
@@ -75,11 +75,11 @@ print(train_test_data[0]['Balance'].describe())
 sns.boxplot(train_test_data[0]['Balance'])
 plt.title('Balance boxplot')
 plt.show()
-# print(train_test_data[0][(train_test_data[0].Balance > 80000)].Age.count())
-# print(train_test_data[0].shape)
-# # train_test_data[0].drop(train_test_data[0][train_test_data[0]['Balance'] > 80000].index,
-# #                                            inplace=True)
-# print(train_test_data[0].shape)
+print(train_test_data[0][(train_test_data[0].Balance > 80000)].Age.count())
+print(train_test_data[0].shape)
+train_test_data[0].drop(train_test_data[0][train_test_data[0]['Balance'] > 80000].index,
+                                           inplace=True)
+print(train_test_data[0].shape)
 
 
 
@@ -346,7 +346,7 @@ clf.fit(train_test_data[0], target_train)
 clf = check_model(clf, "DecisionTree", train_test_data[1], target_test)
 print(clf.predict_proba(train_test_data[1]))
 print("Decision tree score: ", clf.score(train_test_data[1], target_test))
-tree.export_graphviz(clf,out_file='Diagrams/DecisionTree.dot',label='all',
+tree.export_graphviz(clf,out_file='Diagrams/DecisionTree.dot',class_names=True, label='all',
                      rounded=True, filled = True)
 
 print("Train shape: ", train_test_data[0].shape)
@@ -367,10 +367,6 @@ print("Logistic regression coefficients: ", reg.coef_)
 # export_graphviz(clf, out_file = dot_data, filled = True, rounded = True, special_characters= True)
 # graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
 # Image(graph.create_png())
-tree.plot_tree(clf, fontsize=10, rounded=True)
-plt.figure(dpi=600)
-plt.tight_layout()
-plt.show()
 
 # MLP Classifier
 mlp = MLPClassifier(solver='adam', hidden_layer_sizes=(13, 2))

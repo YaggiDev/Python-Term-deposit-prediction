@@ -39,4 +39,14 @@ Output variable (desired target):
 There are no missing values for each attribute.
 
 # Feature engineering
+First step in future engineering was to map categorical variables. In this step following columns were mapped:
+- Target
+- Marital
+- Education
+- Default
+- Contact
+- Loan
+- Poutcome  
 
+On the basis of the Month column there were created binary variables for each month, so as the result we added 12 new columns to our dataframe. Thus the initial Month column was dropped.
+Same solution was also applied to Job column (we obtained 12 new binary variables). 
