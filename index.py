@@ -18,6 +18,7 @@ import matplotlib as mpl
 from mlxtend.plotting import plot_decision_regions
 from sklearn.neural_network import MLPClassifier
 import pickle
+from sklearn.externals import joblib
 
 # -*- coding: utf-8 -*-
 # Dataset source: https://archive.ics.uci.edu/ml/datasets/bank+marketing
@@ -74,8 +75,12 @@ print(train_test_data[0]['Balance'].describe())
 sns.boxplot(train_test_data[0]['Balance'])
 plt.title('Balance boxplot')
 plt.show()
-print(train_test_data[0][(train_test_data[0].Balance > 80000)].Age.count())
-train_test_data[0].drop(train_test_data[0][train_test_data[0]['Balance'] > 80000].index, inplace=True)
+# print(train_test_data[0][(train_test_data[0].Balance > 80000)].Age.count())
+# print(train_test_data[0].shape)
+# # train_test_data[0].drop(train_test_data[0][train_test_data[0]['Balance'] > 80000].index,
+# #                                            inplace=True)
+# print(train_test_data[0].shape)
+
 
 
 def bar_chart(feature):
@@ -273,26 +278,27 @@ print(train_test_data[0].head(5))
 
 
 # Save the model
-def pickle_in(model, filename, path="Models/"):
-    filename = path + filename + ".pickle"
-    pickle.dump(model, open(filename, "wb"))
+def save_model(model, filename, path="Models/"):
+    filename = path + filename + ".joblib"
+    joblib.dump(model,filename)
 
 
 # Load the model
-def pickle_out(filename, path="Models/"):
-    filename = path + filename + ".pickle"
-    return pickle.load(open(filename, "rb"))
+def load_model(filename, path="Models/"):
+    filename = path + filename + ".joblib"
+    return joblib.load(filename)
 
 
 # Check pickle if better
 def check_model(model, filename, x_test, y_test, path="Models/"):
     new_model_score = model.score(x_test, y_test)
-    print("New model\nMethod: ",filename,"\nScore: ",new_model_score,"\n__")
-    saved_model = pickle_out(filename, path)
+    print(f"Method: {filename}\n")
+    print("New model\nScore: ",new_model_score,"\n__")
+    saved_model = load_model(filename, path)
     saved_model_score = saved_model.score(x_test, y_test)
-    print("Saved model\nMethod: ", filename, "\nScore: ", saved_model_score, "\n__")
+    print("Saved model\nScore: ", saved_model_score, "\n__")
     if new_model_score > saved_model_score:
-        pickle_in(model, filename)
+        save_model(model, filename)
         return model
     else:
         return saved_model
@@ -303,9 +309,17 @@ cov = train_test_data[0].cov()
 knn = KNeighborsClassifier(algorithm='auto', metric='mahalanobis', metric_params={"V": cov},
                            n_neighbors=3,
                            weights='distance')
+# knn = KNeighborsClassifier(algorithm='auto', metric='euclidean',
+#                            n_neighbors=3,
+#                            weights='distance')
 knn.fit(train_test_data[0], target_train)
 # pickle_in(knn,"KNNModel")
+# joblib.dump(knn, 'Models/KNNModel.joblib')
 knn = check_model(knn, "KNNModel", train_test_data[1], target_test)
+# save model
+
+# load model
+# knn = joblib.load('file')
 pred_knn = knn.predict(train_test_data[1])
 print(pred_knn)  # Classifing
 pred_prob_knn = knn.predict_proba(train_test_data[1])
@@ -328,17 +342,19 @@ train_test_data[1].to_csv('test.csv')
 
 clf = DecisionTreeClassifier(criterion='gini', max_depth=10, min_samples_leaf=0.01)
 clf.fit(train_test_data[0], target_train)
-# pickle_in(clf,"DecisionTree")
+# joblib.dump(clf, 'Models/DecisionTree.joblib')
 clf = check_model(clf, "DecisionTree", train_test_data[1], target_test)
 print(clf.predict_proba(train_test_data[1]))
 print("Decision tree score: ", clf.score(train_test_data[1], target_test))
+tree.export_graphviz(clf,out_file='Diagrams/DecisionTree.dot',label='all',
+                     rounded=True, filled = True)
 
 print("Train shape: ", train_test_data[0].shape)
 print("Test shape: ", train_test_data[1].shape)
 
-reg = LogisticRegression(random_state=0)
+reg = LogisticRegression( solver = 'lbfgs', max_iter= 10000)
 reg.fit(train_test_data[0], target_train)
-# pickle_in(reg, "LogisticRegression")
+# joblib.dump(reg, 'Models/LogisticRegression.joblib')
 reg = check_model(reg, "LogisticRegression", train_test_data[1], target_test)
 print(reg.predict(train_test_data[1]))
 print("Logistic regression score: ", reg.score(train_test_data[1], target_test))
@@ -359,6 +375,6 @@ plt.show()
 # MLP Classifier
 mlp = MLPClassifier(solver='adam', hidden_layer_sizes=(13, 2))
 mlp.fit(train_test_data[0], target_train)
-# pickle_in(mlp, "MLPClassifier")
+# joblib.dump(mlp, 'Models/MLPClassifier.joblib')
 mlp = check_model(mlp, "MLPClassifier", train_test_data[1], target_test)
 print("Neural network MLP: ", mlp.score(train_test_data[1], target_test))
