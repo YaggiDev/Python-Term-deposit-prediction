@@ -289,7 +289,7 @@ def load_model(filename, path="Models/"):
     return joblib.load(filename)
 
 
-# Check pickle if better
+# Check saved model if better
 def check_model(model, filename, x_test, y_test, path="Models/"):
     new_model_score = model.score(x_test, y_test)
     print(f"Method: {filename}\n")
@@ -304,15 +304,44 @@ def check_model(model, filename, x_test, y_test, path="Models/"):
         return saved_model
 
 
+def roc_curve(model,filename,y_train, y_test, model_name):
+
+    # Train data
+    pred_prob_tr = model.predict_proba(train_test_data[0])
+    preds_tr = pred_prob_tr[:, 1]
+    fpr_tr, tpr_tr, treshold_tr = metrics.roc_curve(y_train, preds_tr)
+    roc_auc_tr = metrics.auc(fpr_tr, tpr_tr)
+
+    # Test data
+    pred_prob = model.predict_proba(train_test_data[1])
+    preds = pred_prob[:,1]
+    fpr, tpr, treshold = metrics.roc_curve(y_test, preds)
+    roc_auc = metrics.auc(fpr, tpr)
+
+    plt.figure()
+    plt.plot(fpr, tpr, label='AUC TestData (area =%0.2f)' % roc_auc)
+    plt.plot(fpr_tr, tpr_tr, label='AUC TrainData (area=%0.2f)'%roc_auc_tr)
+    plt.plot([0, 1], [0, 1], 'r--')
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title(f'Receiver Operating Characteristic Curve {model_name}')
+    plt.savefig(f'Diagrams/{filename}')
+    plt.legend(loc='lower right')
+    plt.show()
+
 cov = train_test_data[0].cov()
 
-knn = KNeighborsClassifier(algorithm='auto', metric='mahalanobis', metric_params={"V": cov},
-                           n_neighbors=3,
-                           weights='distance')
-# knn = KNeighborsClassifier(algorithm='auto', metric='euclidean',
+# knn = KNeighborsClassifier(algorithm='auto', metric='mahalanobis', metric_params={"V": cov},
 #                            n_neighbors=3,
 #                            weights='distance')
+# Euclidean for faster performance
+knn = KNeighborsClassifier(algorithm='auto', metric='euclidean',
+                           n_neighbors=3,
+                           weights='distance')
 knn.fit(train_test_data[0], target_train)
+
 # pickle_in(knn,"KNNModel")
 # joblib.dump(knn, 'Models/KNNModel.joblib')
 knn = check_model(knn, "KNNModel", train_test_data[1], target_test)
@@ -322,8 +351,10 @@ knn = check_model(knn, "KNNModel", train_test_data[1], target_test)
 # knn = joblib.load('file')
 pred_knn = knn.predict(train_test_data[1])
 print(pred_knn)  # Classifing
-pred_prob_knn = knn.predict_proba(train_test_data[1])
-print(pred_prob_knn)  # probability
+# pred_prob_knn = knn.predict_proba(train_test_data[1])
+# print(pred_prob_knn)  # probability
+roc_curve(knn,"ROC_KNN",target_train,target_test,"KNN")
+
 
 print("KNN score: ", knn.score(train_test_data[1], target_test))
 # Importing for SAS
@@ -340,14 +371,17 @@ train_test_data[1].to_csv('test.csv')
 # plt.title('KNN with K = 3')
 # plt.show()
 
-clf = DecisionTreeClassifier(criterion='gini', max_depth=10, min_samples_leaf=0.01)
+clf = DecisionTreeClassifier(criterion='gini', max_depth=6, min_samples_leaf=0.01)
 clf.fit(train_test_data[0], target_train)
 # joblib.dump(clf, 'Models/DecisionTree.joblib')
 clf = check_model(clf, "DecisionTree", train_test_data[1], target_test)
 print(clf.predict_proba(train_test_data[1]))
 print("Decision tree score: ", clf.score(train_test_data[1], target_test))
-tree.export_graphviz(clf,out_file='Diagrams/DecisionTree.dot',class_names=True, label='all',
+print(target_train.value_counts())
+tree.export_graphviz(clf,out_file='Diagrams/DecisionTree.dot',class_names=['0','1'], label='all',
                      rounded=True, filled = True)
+
+roc_curve(clf,"ROC_DTC",target_train, target_test,"Decision Tree Classifier")
 
 print("Train shape: ", train_test_data[0].shape)
 print("Test shape: ", train_test_data[1].shape)
@@ -359,6 +393,8 @@ reg = check_model(reg, "LogisticRegression", train_test_data[1], target_test)
 print(reg.predict(train_test_data[1]))
 print("Logistic regression score: ", reg.score(train_test_data[1], target_test))
 print("Logistic regression coefficients: ", reg.coef_)
+
+roc_curve(reg,"ROC_reg",target_train, target_test,"Logistic Regression")
 
 # fpr, tpr, threshold = metrics.roc_auc_score(target_test,pred_prob_knn[1])
 # print(metrics.auc(fpr,tpr))
@@ -374,3 +410,4 @@ mlp.fit(train_test_data[0], target_train)
 # joblib.dump(mlp, 'Models/MLPClassifier.joblib')
 mlp = check_model(mlp, "MLPClassifier", train_test_data[1], target_test)
 print("Neural network MLP: ", mlp.score(train_test_data[1], target_test))
+roc_curve(mlp,"ROC_MLP",target_train, target_test,"MLP Classifier")
