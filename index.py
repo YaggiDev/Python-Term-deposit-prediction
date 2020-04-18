@@ -19,6 +19,7 @@ from mlxtend.plotting import plot_decision_regions
 from sklearn.neural_network import MLPClassifier
 import pickle
 from sklearn.externals import joblib
+from imblearn.over_sampling import SMOTE
 
 # -*- coding: utf-8 -*-
 # Dataset source: https://archive.ics.uci.edu/ml/datasets/bank+marketing
@@ -33,6 +34,14 @@ Y['Target'] = data['Target']
 print(Y)
 X = data.drop(['Target'], 1)
 print(X)
+
+# Check target values balance
+print(f"Target value counts \n{Y['Target'].value_counts()}")
+yes = len(Y[Y['Target'] == 'yes'])/ len(Y)
+print(f"Percentage of 'yes' answer: {yes}")
+print(f"Percentage of 'no' answer: {1-yes}")
+
+
 x_train, x_test, y_train, y_test = model_selection.train_test_split(X, Y, test_size=0.1)
 train = pd.concat([x_train, y_train], axis=1, sort=False)
 test = pd.concat([x_test, y_test], axis=1, sort=False)
@@ -234,14 +243,19 @@ bar_chart('Age')
 #     print(train[column].describe())
 
 
-def Normalize(feature):
-    for dataset in train_test_data:
-        col = dataset[[feature]].values.astype(float)
-        min_max_scaler = preprocessing.MinMaxScaler()
-        col_scaled = min_max_scaler.fit_transform(col)
-        _feature = feature + "_norm"
-        dataset[_feature] = pd.DataFrame(col_scaled)
-    print("Normalized {}: ".format(feature), X[_feature].tail(10))
+def Normalize(data):
+    x = data.values
+    min_max_scaler = preprocessing.MinMaxScaler()
+    x_scaled = min_max_scaler.fit_transform(x)
+    data = pd.DataFrame(x_scaled)
+    return data
+    # for dataset in train_test_data:
+    #     col = dataset[[feature]].values.astype(float)
+    #     min_max_scaler = preprocessing.MinMaxScaler()
+    #     col_scaled = min_max_scaler.fit_transform(col)
+    #     _feature = feature + "_norm"
+    #     dataset[_feature] = pd.DataFrame(col_scaled)
+    # print("Normalized {}: ".format(feature), X[_feature].tail(10))
 
 
 temp = pd.DataFrame()
@@ -275,6 +289,10 @@ train_test_data[1] = train_test_data[1].drop('Month', axis=1)
 
 print(train_test_data[0].columns)
 print(train_test_data[0].head(5))
+
+# Normalization
+for i in range(2):
+    train_test_data[i] = Normalize(train_test_data[i])
 
 
 # Save the model
@@ -319,8 +337,8 @@ def roc_curve(model,filename,y_train, y_test, model_name):
     roc_auc = metrics.auc(fpr, tpr)
 
     plt.figure()
-    plt.plot(fpr, tpr, label='AUC TestData (area =%0.2f)' % roc_auc)
-    plt.plot(fpr_tr, tpr_tr, label='AUC TrainData (area=%0.2f)'%roc_auc_tr)
+    plt.plot(fpr, tpr, label='Test Data (AUC =%0.2f)' % roc_auc)
+    plt.plot(fpr_tr, tpr_tr, label='Train Data (AUC=%0.2f)'%roc_auc_tr)
     plt.plot([0, 1], [0, 1], 'r--')
     plt.xlim([0.0, 1.0])
     plt.ylim([0.0, 1.05])
@@ -330,6 +348,17 @@ def roc_curve(model,filename,y_train, y_test, model_name):
     plt.savefig(f'Diagrams/{filename}')
     plt.legend(loc='lower right')
     plt.show()
+
+# SMOTE to balance data
+columns = train_test_data[0].columns
+print(f"Training target (1) data length before oversampling: {len(target_train[target_train==1])}")
+sm = SMOTE(sampling_strategy=0.2 ,k_neighbors=5)
+sm_x_train, sm_y_train = sm.fit_sample(train_test_data[0],target_train)
+train_test_data[0] = pd.DataFrame(data=sm_x_train, columns=columns)
+target_train = pd.DataFrame(data=sm_y_train)
+target_train = np.ravel(target_train)
+print(f"After oversampling length: {len(target_train[target_train==1])}")
+
 
 cov = train_test_data[0].cov()
 
@@ -377,7 +406,6 @@ clf.fit(train_test_data[0], target_train)
 clf = check_model(clf, "DecisionTree", train_test_data[1], target_test)
 print(clf.predict_proba(train_test_data[1]))
 print("Decision tree score: ", clf.score(train_test_data[1], target_test))
-print(target_train.value_counts())
 tree.export_graphviz(clf,out_file='Diagrams/DecisionTree.dot',class_names=['0','1'], label='all',
                      rounded=True, filled = True)
 
@@ -386,7 +414,7 @@ roc_curve(clf,"ROC_DTC",target_train, target_test,"Decision Tree Classifier")
 print("Train shape: ", train_test_data[0].shape)
 print("Test shape: ", train_test_data[1].shape)
 
-reg = LogisticRegression( solver = 'lbfgs', max_iter= 10000)
+reg = LogisticRegression(solver = 'lbfgs', max_iter= 10000)
 reg.fit(train_test_data[0], target_train)
 # joblib.dump(reg, 'Models/LogisticRegression.joblib')
 reg = check_model(reg, "LogisticRegression", train_test_data[1], target_test)
