@@ -46,7 +46,7 @@ Data is located in bank-full.csv and splitted into train and test data in propor
 20. nr.employed: number of employees hired (numeric)  
 
 **Output variable (desired target):**
-21. y - has the client subscribed a term deposit? (binary: "yes","no")
+  21. y - has the client subscribed a term deposit? (binary: "yes","no")
 
 There are no missing values for each attribute.
 
