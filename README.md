@@ -66,10 +66,12 @@ On the basis of the below listed columns, there were created binary variables (d
 - Day of week
 - Poutcome
 
-Based on input variables there were also made 6 additional variables:
+Based on input variables there were also made 7 additional variables:
 - if_basic_educ - binary - 1 when <i>Education</i> is one of 'basic.4y', 'basic.6y', 'basic.9y' - 0 in other cases,
 - if_no_loan - binary - 1 when <i>Loan</i> and <i>Housing</i> takes 0 (client doesnt have any loan), 0 in other cases,
 - if_both_loan - binary - 1 when <i>Loan</i> and <i>Housing</i> takes 1 (client has both loans), 0 in other cases,
 - if_holidays - binary - 1 when <i>Month</i> is 'jul' or 'aug', 0 in other cases,
 - if_contact_this_camp - binary - 1 when <i>Campaign</i> > 1 (if number of contacts with client is more than one in this campaign),
+- if_contact_prev - binary - 1 when <i>Pdays</i> ≠ 999 (if client has been contacted in previous campaign, 0 in other cases,
 - if_contact_no_camp - binary - 1 when <i>if_contact_prev</i> is 0 and <i>Previous</i> > 0 (the client has been contacted before current and previous campaign).
+
