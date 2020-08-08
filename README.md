@@ -58,7 +58,7 @@ First step in future engineering was to map categorical variables. In this step 
 - Loan
 - Contact 
 
-However these columns were transformed into dummy variables:
+On the basis of the below listed columns, there were created binary variables (dummy variables) for each encountered unique value:
 - Marital
 - Education
 - Job
@@ -66,6 +66,6 @@ However these columns were transformed into dummy variables:
 - Day of week
 - Poutcome
 
-On the basis of the above listed columns there were created binary variables for each encountered unique value.
-//On the basis of the Month column there were created binary variables for each month, so as the result we added 12 new columns to our dataframe. Thus the initial Month column was dropped, .
-//Same solution was also applied to Job column (we obtained 12 new binary variables). 
+
+<i>On the basis of the Month column there were created binary variables for each month, so as the result we added 12 new columns to our dataframe. Thus the initial Month column was dropped, .
+//Same solution was also applied to Job column (we obtained 12 new binary variables). </i>
