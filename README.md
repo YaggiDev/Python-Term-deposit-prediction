@@ -51,14 +51,21 @@ Data is located in bank-full.csv and splitted into train and test data in propor
 There are no missing values for each attribute.
 
 # Feature engineering
-First step in future engineering was to map categorical variables. In this step following columns were mapped:
+First step in future engineering was to map categorical variables. In this step following columns were mapped into single binary variables:
 - Target
+- Answer
+- Housing
+- Loan
+- Contact 
+
+However these columns were transformed into dummy variables:
 - Marital
 - Education
-- Default
-- Contact
-- Loan
-- Poutcome  
+- Job
+- Month
+- Day of week
+- Poutcome
 
-On the basis of the Month column there were created binary variables for each month, so as the result we added 12 new columns to our dataframe. Thus the initial Month column was dropped.
-Same solution was also applied to Job column (we obtained 12 new binary variables). 
+On the basis of the above listed columns there were created binary variables for each encountered unique value.
+//On the basis of the Month column there were created binary variables for each month, so as the result we added 12 new columns to our dataframe. Thus the initial Month column was dropped, .
+//Same solution was also applied to Job column (we obtained 12 new binary variables). 
