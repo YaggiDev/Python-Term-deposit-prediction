@@ -71,5 +71,5 @@ Based on input variables there were also made 6 extra variables:
 - if_no_loan - binary - 1 when <i>Loan</i> and <i>Housing</i> takes 0 (client doesnt have any loan), 0 in other cases,
 - if_both_loan - binary - 1 when <i>Loan</i> and <i>Housing</i> takes 1 (client has both loans), 0 in other cases,
 - if_holidays - binary - 1 when <i>Month</i> is 'jul' or 'aug', 0 in other cases,
-- if_contact_this_camp - binary - 1 when <i>Campaign</i>>1 (if number of contacts with client is more than one in this campaign),
-- if_contact_no_camp - binary - 1 when <i>if_contact_prev</i> is 0 and <i>Previous</i>>0 (the client has been contacted before current and previous campaign).
+- if_contact_this_camp - binary - 1 when <i>Campaign</i> > 1 (if number of contacts with client is more than one in this campaign),
+- if_contact_no_camp - binary - 1 when <i>if_contact_prev</i> is 0 and <i>Previous</i> > 0 (the client has been contacted before current and previous campaign).
