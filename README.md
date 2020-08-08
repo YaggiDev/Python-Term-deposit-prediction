@@ -66,7 +66,7 @@ On the basis of the below listed columns, there were created binary variables (d
 - Day of week
 - Poutcome
 
-Based on input variables there were also made 6 extra variables:
+Based on input variables there were also made 6 additional variables:
 - if_basic_educ - binary - 1 when <i>Education</i> is one of 'basic.4y', 'basic.6y', 'basic.9y' - 0 in other cases,
 - if_no_loan - binary - 1 when <i>Loan</i> and <i>Housing</i> takes 0 (client doesnt have any loan), 0 in other cases,
 - if_both_loan - binary - 1 when <i>Loan</i> and <i>Housing</i> takes 1 (client has both loans), 0 in other cases,
