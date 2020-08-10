@@ -17,7 +17,7 @@ The data used in project is related with direct marketing campaign of a Portugue
 Data is located in bank-full.csv and splitted into train and test data in proportion 0,9 to 0,1. As a result we have 37068 rows of training data and 4119 rows of testing data. 
 # Bank client data:
 
-**Customer-related variables:**  
+  **Customer-related variables:**  
 1. age (numeric)  
 2. job: type of job (categorical: ‘admin’, ‘blue-collar’,  ‘enterpreneur’, ‘housemaid’, management’, ‘retired’, ‘self-employed’, ‘services’, ‘student’, ‘technician’, ‘unemployed’, ‘unknown’)  
 3. marital: marital status (categorical: ‘divorced’, ‘married’, ‘single’, ‘unknown’; note: ‘divorced’ means divorced or widowed)  
