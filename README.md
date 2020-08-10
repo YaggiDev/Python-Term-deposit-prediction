@@ -26,7 +26,7 @@ Data is located in bank-full.csv and splitted into train and test data in propor
 6. housing: has housing loan? (categorial: ‘no’, ‘yes’, ‘unknown’)  
 7. loan: has personal loan? (categorial: ‘no’, ‘yes’, ‘unknown’)  
 
-   **Last contact related variables:**  
+   **Last contact related variables:**   
  8.  contact: contact communication type (categorical: ‘cellular’, ‘telephone’)  
  9.  month: last contact month of the year (categorical)  
  10. day_of_week: last contact day of the week (categorical)  
