@@ -27,10 +27,10 @@ Data is located in bank-full.csv and splitted into train and test data in propor
 7.  loan: has personal loan? (categorial: ‘no’, ‘yes’, ‘unknown’)  
 
 **Last contact related variables:**  
-   8.  contact: contact communication type (categorical: ‘cellular’, ‘telephone’)  
-   9.  month: last contact month of the year (categorical)  
-    10. day_of_week: last contact day of the week (categorical)  
-    11. duration: last contact duration in seconds. Important note: this attribute highly affects the output target  
+ ..8.  contact: contact communication type (categorical: ‘cellular’, ‘telephone’)  
+ 9.  month: last contact month of the year (categorical)  
+ 10. day_of_week: last contact day of the week (categorical)  
+ 11. duration: last contact duration in seconds. Important note: this attribute highly affects the output target  
 
 **Other variables:**  
   12. campaign: number of contacts performed during this campaign and for this client (numeric, includes last contact)  
