@@ -32,7 +32,7 @@ Data is located in bank-full.csv and splitted into train and test data in propor
  10. day_of_week: last contact day of the week (categorical)  
  11. duration: last contact duration in seconds. Important note: this attribute highly affects the output target  
 
-  **Other variables:** 
+  **Other variables:** <br/>
  12.   campaign: number of contacts performed during this campaign and for this client (numeric, includes last contact)  
  13.   pdays: number of days that passed by after the client was last contacted from previous campaign (numeric: 999 means client was not previously contacted)  
  14.   previous: number of contacts performed before this campaign and for this client  
