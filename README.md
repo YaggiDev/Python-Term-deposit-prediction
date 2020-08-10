@@ -32,20 +32,20 @@ Data is located in bank-full.csv and splitted into train and test data in propor
  10. day_of_week: last contact day of the week (categorical)  
  11. duration: last contact duration in seconds. Important note: this attribute highly affects the output target  
 
-**Other variables:**  
+  **Other variables:**  
   12. campaign: number of contacts performed during this campaign and for this client (numeric, includes last contact)  
   13. pdays: number of days that passed by after the client was last contacted from previous campaign (numeric: 999 means client was not previously contacted)  
   14. previous: number of contacts performed before this campaign and for this client  
   15. poutcome: outcome of the previous marketing campaign (categorical: ‘failure’, ‘nonexistent’, ‘success’)  
 
-**Variables with socio-economic context:**  
+  **Variables with socio-economic context:**  
   16. emp.var.rate: employment variation rate (numeric)  
   17. cons.price.idx: consumer price index (numeric)  
   18. cons.conf.idx: consumer confidence index (numeric)  
   19. euribor3m: euribor 3 month rate (numeric)  
   20. nr.employed: number of employees hired (numeric)  
 
-**Output variable (desired target):**<br/>
+  **Output variable (desired target):**<br/>  
     21. y - has the client subscribed a term deposit? (binary: "yes","no")
 
 There are no missing values for each attribute.
