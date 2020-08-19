@@ -75,3 +75,4 @@ Based on input variables there were also made 7 additional variables:
 - if_contact_prev - binary - 1 when <i>Pdays</i> ≠ 999 (if client has been contacted in previous campaign, 0 in other cases,
 - if_contact_no_camp - binary - 1 when <i>if_contact_prev</i> is 0 and <i>Previous</i> > 0 (the client has been contacted before current and previous campaign).
 
+# Exploratory data analysis (EDA)
