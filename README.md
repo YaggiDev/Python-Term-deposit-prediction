@@ -79,4 +79,4 @@ Based on input variables there were also made 7 additional variables:
 
 ## Age:
 
-![Age boxplot](/Diagramy/wiek_boxplot.png?raw=true "Age boxplot")
+![Age boxplot](/Diagramy/wiek_boxplot.png "Age boxplot")
