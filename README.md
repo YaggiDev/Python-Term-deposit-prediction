@@ -78,5 +78,6 @@ Based on input variables there were also made 7 additional variables:
 # Exploratory data analysis (EDA)
 
 ## Age variable:
-**Boxplot**<\br>
+**Boxplot**<br/>
+
 ![Age boxplot](Diagrams/wiek_boxplot.png "Age boxplot")
