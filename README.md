@@ -87,7 +87,7 @@ Based on input variables there were also made 7 additional variables:
 | ----- | ----- |
 | count | 41187.000000 |
 | mean | 40.023673 years |
-| std | 10.421079 |
+| std | 10.421079 years |
 | min | 17 years |
 | 25% | 32 years |
 | 50% | 38 years |
