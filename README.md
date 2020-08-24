@@ -83,7 +83,7 @@ Based on input variables there were also made 7 additional variables:
 ![Age boxplot](Diagrams/wiek_boxplot.png "Age boxplot")
 
 **Describe**<br/>
-| title | value |
+| Title | Value |
 | ----- | ----- |
 | count | 41187.000000 |
 | mean | 40.023673 |
