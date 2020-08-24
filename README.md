@@ -88,8 +88,8 @@ Based on input variables there were also made 7 additional variables:
 | count | 41187.000000 |
 | mean | 40.023673 |
 | std | 10.421079 |
-| min | 17.000000 |
-| 25% | 32.000000 |
-| 50% | 38.000000 |
-| 75% | 47.000000 |
-| max | 98.000000 |
+| min | 17 |
+| 25% | 32 |
+| 50% | 38 |
+| 75% | 47 |
+| max | 98 |
