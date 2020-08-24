@@ -86,10 +86,10 @@ Based on input variables there were also made 7 additional variables:
 | Title | Value |
 | ----- | ----- |
 | count | 41187.000000 |
-| mean | 40.023673 |
+| mean | 40.023673 years |
 | std | 10.421079 |
-| min | 17 |
-| 25% | 32 |
-| 50% | 38 |
-| 75% | 47 |
-| max | 98 |
+| min | 17 years |
+| 25% | 32 years |
+| 50% | 38 years |
+| 75% | 47 years |
+| max | 98 years |
