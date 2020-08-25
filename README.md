@@ -99,5 +99,10 @@ Based on input variables there were also made 7 additional variables:
 ![Age density plot](Diagrams/wiek_kdeplot.png "Age density plot")
 
 **Density plot for age groups**<br/>
+| Age | Group label |
+| 18 - 24 | 0 |
+| 25 - 54 | 1 |
+| 55 - 66 | 2 |
+| > 67 | 3 |
 
 ![Groupped age density plot](Diagrams/wiek_gkdeplot.png "Groupped age density plot")
