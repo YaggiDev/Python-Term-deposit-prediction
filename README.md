@@ -93,3 +93,7 @@ Based on input variables there were also made 7 additional variables:
 | 50% | 38 years |
 | 75% | 47 years |
 | max | 98 years |
+
+**Density plot**<br/>
+
+![Age density plot](Diagrams/wiek_kdeplot.png "Age density plot")
