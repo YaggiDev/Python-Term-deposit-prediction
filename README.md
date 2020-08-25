@@ -97,3 +97,7 @@ Based on input variables there were also made 7 additional variables:
 **Density plot**<br/>
 
 ![Age density plot](Diagrams/wiek_kdeplot.png "Age density plot")
+
+**Density plot for age groups**<br/>
+
+![Groupped age density plot](Diagrams/wiek_gkdeplot.png "Groupped age density plot")
