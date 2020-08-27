@@ -124,5 +124,5 @@ Analysing above showed diagrams and data description, we can clearly see that th
 | Single | 1 |
 | Divorced | 2 |
 | Unknown | 3 |
-<br/>
+
 ![Marital status density plot](Diagrams/status_gkdeplot.png "Marital status density plot")
