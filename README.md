@@ -105,6 +105,7 @@ Based on input variables there were also made 7 additional variables:
 | 25 - 54 | 1 |
 | 55 - 66 | 2 |
 | > 67 | 3 |
+***!Groups mentioned above were created based on age groups specific to portugal.***
 
 ![Groupped age density plot](Diagrams/wiek_gkdeplot.png "Groupped age density plot")
 <br/>**Conclusion:**<br/>
