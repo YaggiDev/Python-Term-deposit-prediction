@@ -116,4 +116,4 @@ Analysing above showed diagrams and data description, we can clearly see that th
 ## Marital status variable:
 **Density plot**<br/>
 
-![Marital status density plot](Diagrams/status_kdeplot.png "Marital status density plot")
+![Marital status density plot](Diagrams/status_gkdeplot.png "Marital status density plot")
