@@ -107,3 +107,5 @@ Based on input variables there were also made 7 additional variables:
 | > 67 | 3 |
 
 ![Groupped age density plot](Diagrams/wiek_gkdeplot.png "Groupped age density plot")
+
+Analysing above showed diagrams and data description, we can clearly see that there are many outliers (persons above 69 years old). However in my opinion there are no need replacing these records, cause looking at the density diagram, they carry valuable informations about our target variable. As we can see persons above 69 years old are more likely to accept the subscription of term deposit. Also instead having outliers in modelling, we can consider transforming age column into groups that presents specific ages.
