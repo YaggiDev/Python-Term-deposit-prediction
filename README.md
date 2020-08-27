@@ -118,5 +118,11 @@ Analysing above showed diagrams and data description, we can clearly see that th
 ![Marital status count plot](Diagrams/status_countplot.png "Marital status count plot")
 
 **Density plot**<br/>
-
+| Status | Group label |
+| --- | --- |
+| Married | 0 |
+| Single | 1 |
+| Divorced | 2 |
+| Unknown | 3 |
+<br/>
 ![Marital status density plot](Diagrams/status_gkdeplot.png "Marital status density plot")
