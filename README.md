@@ -128,4 +128,19 @@ Analysing above showed diagrams and data description, we can clearly see that th
 ![Marital status density plot](Diagrams/status_gkdeplot.png "Marital status density plot")<br/>
 
 **Conclusion:**<br/>
-As we see on the diagrams above, persons with marital status equal to "married" are most likely to decline the subscription offer. The difference between target values for other groups is not significant enough to speculate. In the data we also see some unknown values for marital status, we can consider removing these observations (since there are only 80) or fill values using KNN Imputer. 
+As we see on the diagrams above, persons with marital status equal to "married" are most likely to decline the subscription offer. The difference between target values for other groups is not significant enough to speculate. In the data we also see some unknown values for marital status, we can consider removing these observations (since there are only 80) or fill values using KNN Imputer. <br/>
+
+## Education variable:
+**Density plot**<br/>
+| Education | Group label |
+| --- | --- |
+| Illiterate | 0 |
+| Basic 4y | 1 |
+| Basic 6y | 2 |
+| Basic 9y | 3 |
+| High school | 4 |
+| Professional course | 5 |
+| University degree | 6 |
+| Unkown | 7 |
+
+![Education density plot](Diagrams/education_gkdeplot.png "Education density plot")<br/>
