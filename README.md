@@ -149,4 +149,7 @@ As we see on the diagrams above, persons with marital status equal to "married" 
 ![Education density plot](Diagrams/education_gkdeplot.png "Education density plot")<br/>
 
 **Conclusion:**<br/>
-As we can see, with the education level higher than high school, people seems to be more likely subscribing term deposit, especially persons with university degree. It's worth noting that mentioned correlation is not that strong. Also there are 1731 unknown values, which we will fill after using KNN Imputer.
+As we can see, with the education level higher than high school, people seems to be more likely subscribing term deposit, especially persons with university degree. It's worth noting that mentioned correlation is not that strong. Also there are 1731 unknown values, which we will fill after using KNN Imputer.<br/>
+
+## Default variable:
+
