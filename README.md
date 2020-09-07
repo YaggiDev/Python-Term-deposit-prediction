@@ -131,6 +131,9 @@ Analysing above showed diagrams and data description, we can clearly see that th
 As we see on the diagrams above, persons with marital status equal to "married" are most likely to decline the subscription offer. The difference between target values for other groups is not significant enough to speculate. In the data we also see some unknown values for marital status, we can consider removing these observations (since there are only 80) or fill values using KNN Imputer. <br/>
 
 ## Education variable:
+**Categorical count plot**<br/>
+![Education count plot](Diagrams/education_countplot.png "Education count plot")
+
 **Density plot**<br/>
 | Education | Group label |
 | --- | --- |
