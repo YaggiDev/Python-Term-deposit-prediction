@@ -147,3 +147,5 @@ As we see on the diagrams above, persons with marital status equal to "married" 
 | Unkown | 7 |
 
 ![Education density plot](Diagrams/education_gkdeplot.png "Education density plot")<br/>
+
+**Conclusion:**<br/>
