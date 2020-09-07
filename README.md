@@ -125,4 +125,7 @@ Analysing above showed diagrams and data description, we can clearly see that th
 | Divorced | 2 |
 | Unknown | 3 |
 
-![Marital status density plot](Diagrams/status_gkdeplot.png "Marital status density plot")
+![Marital status density plot](Diagrams/status_gkdeplot.png "Marital status density plot")<br/>
+
+**Conclusion:**<br/>
+As we see on the diagrams above, persons with marital status equal to "married" are most likely to decline the subscription offer. The difference between target values for other groups is not significant enough to speculate.
