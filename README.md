@@ -152,4 +152,15 @@ As we see on the diagrams above, persons with marital status equal to "married" 
 As we can see, with the education level higher than high school, people seems to be more likely subscribing term deposit, especially persons with university degree. It's worth noting that mentioned correlation is not that strong. Also there are 1731 unknown values, which we will fill after using KNN Imputer.<br/>
 
 ## Default variable:
+**value counts:**<br/>
+| Value | Count |
+| --- | --- |
+| no | 32587 |
+| unkown | 8597 |
+| yes | 3 |
 
+**Conclusion:**<br/>
+Basing only on this particular variable, does not give us many informations about our target variable. However this variable, might be helpful when mixing with personal loan feature.
+
+## Personal loan variable:
+**
