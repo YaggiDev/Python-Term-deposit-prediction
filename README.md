@@ -162,5 +162,9 @@ As we can see, with the education level higher than high school, people seems to
 **Conclusion:**<br/>
 Basing only on this particular variable, does not give us many informations about our target variable. However this variable, might be helpful when mixing with personal loan feature.
 
-## Personal loan variable:
-**
+## Housing variable:
+**Density plot**<br/>
+![Housing density plot](Diagrams/housing_kdeplot.png 'Housing density plot')<br/>
+
+**Conclusion:**<br/>
+As we see on the diagram above, we cannot provide any predcition or speculations based on this variable in obvious way. There is an even distribution of our output variable.
