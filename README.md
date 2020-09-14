@@ -24,7 +24,7 @@ Data is located in bank-full.csv and splitted into train and test data in propor
 4. education (categorical: ‘basic.4y’, ‘basic.6y’, ‘basic.9y’, ‘high.school’, ‘illiterate’, ‘professional.course’, ‘university.degree’, ‘unknown’)  
 5. default: has credit in default (categorical: ‘no’, ‘yes’, ‘unknown’)  
 6. housing: has housing loan? (categorial: ‘no’, ‘yes’, ‘unknown’)  
-7. loan: has personal loan? (categorial: ‘no’, ‘yes’, ‘unknown’)  
+7. personal_loan: has personal loan? (categorial: ‘no’, ‘yes’, ‘unknown’)  
 
    **Last contact related variables:**   
  8.  contact: contact communication type (categorical: ‘cellular’, ‘telephone’)  
@@ -168,3 +168,51 @@ Basing only on this particular variable, does not give us many informations abou
 
 **Conclusion:**<br/>
 As we see on the diagram above, we cannot provide any predcition or speculations based on this variable in obvious way. There is an even distribution of our output variable.
+
+## Personal_loan variable:
+**density plot:**<br/>
+
+**Conclusion:**<br/>
+
+## Contact variable:
+**density plot:**<br/>
+
+**Conclusion:**<br/>
+
+## Month variable:
+**density plot:**<br/>
+
+**Conclusion:**<br/>
+
+## Day_of_week variable:
+**density plot:**<br/>
+
+**Conclusion:**<br/>
+
+## Duration variable:
+**density plot:**<br/>
+
+**Conclusion:**<br/>
+
+##  Campaign variable:
+**density plot:**<br/>
+
+**Conclusion:**<br/>
+
+## Pdays variable:
+**density plot:**<br/>
+
+**Conclusion:**<br/>
+
+## Previous variable:
+**density plot:**<br/>
+
+**Conclusion:**<br/>
+
+## Poutcome variable:
+**density plot:**<br/>
+
+**Conclusion:**<br/>
+
+
+
