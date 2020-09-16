@@ -171,7 +171,7 @@ As we see on the diagram above, we cannot provide any predcition or speculations
 
 ## Personal_loan variable:
 **Count plot:**<br/>
-![Personal_loan count plot](Diagrams/personal_loan.png 'Personal_loan count plot')<br/>
+![Personal_loan count plot](Diagrams/Personal_loan_countplot.png 'Personal_loan count plot')<br/>
 
 **Conclusion:**<br/>
 
