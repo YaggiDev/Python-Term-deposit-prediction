@@ -170,7 +170,8 @@ Basing only on this particular variable, does not give us many informations abou
 As we see on the diagram above, we cannot provide any predcition or speculations based on this variable in obvious way. There is an even distribution of our output variable.
 
 ## Personal_loan variable:
-**density plot:**<br/>
+**Count plot:**<br/>
+![Personal_loan count plot](Diagrams/personal_loan.png 'Personal_loan count plot')<br/>
 
 **Conclusion:**<br/>
 
